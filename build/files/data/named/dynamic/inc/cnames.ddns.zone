@@ -1,0 +1,40 @@
+; cname mappings
+static                      CNAME   server
+zabbix                      CNAME   docker
+registry                    CNAME   docker
+portainer                   CNAME   docker
+hub                         CNAME   docker
+encoder                     CNAME   videos
+
+hass                        CNAME   homehub
+bw                          CNAME   homehub
+passwords                   CNAME   homehub
+proxyadmin                  CNAME   homehub
+start                       CNAME   homehub
+*.homehub                   CNAME   homehub
+*.hass                      CNAME   homehub
+
+gists                       CNAME   git
+camera2                     CNAME   broadcast
+vscode                      CNAME   development
+
+pastes                      CNAME   pastebin
+pastebin                    CNAME   services
+
+_msdcs                      CNAME   dc
+
+*._msdcs                    CNAME   dc
+*.el7-test                  CNAME   el7-test
+*.development               CNAME   development
+
+ntp                         CNAME   zerotier
+*.ntp                       CNAME   zerotier
+
+smtp                        CNAME   mail
+pop3                        CNAME   mail
+imap                        CNAME   mail
+
+@                           MX 1    mail
+*                           MX 1    mail
+
+_vlmcs._tcp                 SRV     10 0 1688    dc

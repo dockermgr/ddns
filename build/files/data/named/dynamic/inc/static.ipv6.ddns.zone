@@ -1,0 +1,104 @@
+; static ipv6 mappings
+localhost                   AAAA    ::1
+
+zerotier                     AAAA    2001:db8:edfa:1234::0:2
+;server                      AAAA    2001:db8:edfa:1234::0:1
+;dc                          AAAA    2001:db8:edfa:1234::0:2
+;exchange                    AAAA    2001:db8:edfa:1234::0:3
+
+sso                         AAAA    2001:db8:edfa:1234::0:250
+services                    AAAA    2001:db8:edfa:1234::0:254
+
+vcenter                     AAAA    2001:db8:edfa:1234::1:1
+vmhost01                    AAAA    2001:db8:edfa:1234::1:11
+vmhost02                    AAAA    2001:db8:edfa:1234::1:12
+vmhost03                    AAAA    2001:db8:edfa:1234::1:13
+vmhost04                    AAAA    2001:db8:edfa:1234::1:14
+vmhost05                    AAAA    2001:db8:edfa:1234::1:15
+vmhost06                    AAAA    2001:db8:edfa:1234::1:16
+vmhost07                    AAAA    2001:db8:edfa:1234::1:17
+vz01                        AAAA    2001:db8:edfa:1234::1:100
+
+mssql                       AAAA    2001:db8:edfa:1234::2:1
+mysql                       AAAA    2001:db8:edfa:1234::2:2
+pgsql                       AAAA    2001:db8:edfa:1234::2:3
+
+git                         AAAA    2001:db8:edfa:1234::20:1
+build                       AAAA    2001:db8:edfa:1234::20:2
+test                        AAAA    2001:db8:edfa:1234::20:3
+el7-test                    AAAA    2001:db8:edfa:1234::20:4
+el7-build                   AAAA    2001:db8:edfa:1234::20:5
+fc27-build                  AAAA    2001:db8:edfa:1234::20:6
+fc28-build                  AAAA    2001:db8:edfa:1234::20:7
+fc29-build                  AAAA    2001:db8:edfa:1234::20:8
+fc30-build                  AAAA    2001:db8:edfa:1234::20:9
+development                 AAAA    2001:db8:edfa:1234::20:253
+docker                      AAAA    2001:db8:edfa:1234::20:254
+
+c2                          AAAA    2001:db8:edfa:1234::22:254
+
+desktop-windows             AAAA    2001:db8:edfa:1234::90:1
+desktop-linux               AAAA    2001:db8:edfa:1234::90:2
+
+chromebook-samsung          AAAA    2001:db8:edfa:1234::91:1
+netbook-arch                AAAA    2001:db8:edfa:1234::91:2
+androidwear-lg              AAAA    2001:db8:edfa:1234::91:3
+phone-oneplus3t             AAAA    2001:db8:edfa:1234::91:10
+tablet-firehd7              AAAA    2001:db8:edfa:1234::91:11
+
+homehub                     AAAA    2001:db8:edfa:1234::94:1
+huehub                      AAAA    2001:db8:edfa:1234::94:2
+winkhub                     AAAA    2001:db8:edfa:1234::94:3
+broadcast                   AAAA    2001:db8:edfa:1234::94:10
+couchpotato                 AAAA    2001:db8:edfa:1234::94:11
+headphones                  AAAA    2001:db8:edfa:1234::94:12
+sickrage                    AAAA    2001:db8:edfa:1234::94:13
+plex                        AAAA    2001:db8:edfa:1234::94:14
+emby                        AAAA    2001:db8:edfa:1234::94:15
+music                       AAAA    2001:db8:edfa:1234::94:16
+downloads                   AAAA    2001:db8:edfa:1234::94:17
+airsonic                    AAAA    2001:db8:edfa:1234::94:18
+mpdserver                   AAAA    2001:db8:edfa:1234::94:19
+
+videos                      AAAA    2001:db8:edfa:1234::94:50
+turtl                       AAAA    2001:db8:edfa:1234::94:60
+
+issabove                    AAAA    2001:db8:edfa:1234::94:100
+camera1                     AAAA    2001:db8:edfa:1234::94:101
+rtl-sdr                     AAAA    2001:db8:edfa:1234::94:110
+
+eggbert                     AAAA    2001:db8:edfa:1234::94:248
+aria1                       AAAA    2001:db8:edfa:1234::94:250
+
+roku-livingroom             AAAA    2001:db8:edfa:1234::95:10
+home-masterbedroom          AAAA    2001:db8:edfa:1234::95:12
+roku-office                 AAAA    2001:db8:edfa:1234::95:13
+xbox-livingroom             AAAA    2001:db8:edfa:1234::95:102
+alexa-kitchen               AAAA    2001:db8:edfa:1234::95:130
+chromecast-livingroom       AAAA    2001:db8:edfa:1234::95:125
+chromecast-jobrocker        AAAA    2001:db8:edfa:1234::95:126
+home-kitchen                AAAA    2001:db8:edfa:1234::95:140
+home-bathroom               AAAA    2001:db8:edfa:1234::95:142
+mfc-j5720dw                 AAAA    2001:db8:edfa:1234::95:253
+
+pbx                         AAAA    2001:db8:edfa:1234::96:1
+3cx                         AAAA    2001:db8:edfa:1234::96:2
+spa508g                     AAAA    2001:db8:edfa:1234::96:240
+magicjack-1                 AAAA    2001:db8:edfa:1234::96:250
+
+freenas                     AAAA    2001:db8:edfa:1234::254:1
+vmnas                       AAAA    2001:db8:edfa:1234::254:2
+
+unifi                       AAAA    2001:db8:edfa:1234::255:230
+homewifi                    AAAA    2001:db8:edfa:1234::255:240
+freewifi                    AAAA    2001:db8:edfa:1234::255:241
+lab                         AAAA    2001:db8:edfa:1234::255:242
+gethacked                   AAAA    2001:db8:edfa:1234::255:243
+router0                     AAAA    2001:db8:edfa:1234::255:250
+router1                     AAAA    2001:db8:edfa:1234::255:251
+router2                     AAAA    2001:db8:edfa:1234::255:252
+router3                     AAAA    2001:db8:edfa:1234::255:253
+
+monitor                     AAAA    2001:db8:edfa:1234::255:254
+
+*                           AAAA    2001:db8:edfa:1234::0:2

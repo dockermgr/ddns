@@ -1,0 +1,11 @@
+$ttl 38400
+localhost.  IN  SOA localhost. admin.localhost. (
+              2018020901 10800 3600 1209600 38400
+              )
+
+localhost.          IN    NS      localhost.
+localhost.          IN    A       127.0.0.1
+localhost.          IN    AAAA    ::1
+localhost.          IN    MX      0 localhost.
+localhost.          IN    TXT     "v=spf1 a mx ptr all"
+localhost.          IN    SPF     "v=spf1 a mx ptr all"

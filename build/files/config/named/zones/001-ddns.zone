@@ -1,0 +1,21 @@
+zone "REPLACE_DOMAIN" {
+    type master;
+    file "dynamic/ddns.zone";
+    allow-update { trusted; };
+    allow-transfer { trusted; };
+};
+
+zone "0.10.in-addr.arpa" {
+    type master;
+    file "reverse/0.10.in-addr.arpa.rev";
+    allow-update { trusted; };
+    allow-transfer { trusted; };
+
+};
+
+zone "ip6.arpa" {
+    type master;
+    file "reverse/ip6.arpa.rev";
+    allow-update { trusted; };
+    allow-transfer { trusted; };
+};
