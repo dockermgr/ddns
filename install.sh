@@ -159,6 +159,11 @@ else
     -p 68:68 \
     -p 69:69 \
     -p 546:546 \
+    -p 53:53/udp \
+    -p 67:67/udp \
+    -p 68:68/udp \
+    -p 69:69/udp \
+    -p 546:546/udp \
     -p $SERVER_WEB_PORT:$SERVER_WEB_PORT \
     "$HUB_URL" &>/dev/null
 fi
@@ -205,6 +210,7 @@ if docker ps -a | grep -qs "$APPNAME"; then
   printf_blue "DATADIR in $DATADIR"
   printf_cyan "Installed to $INSTDIR"
   printf_yellow "DNS is running on 53"
+  printf_yellow "tftpd is running on 69"
   printf_yellow "dhcp4 is running on 67"
   printf_yellow "dhcp6 is running on 546"
   [[ -n "$SERVER_WEB_PORT" ]] && printf_blue "and should be available at: http://$ADDR:$SERVER_WEB_PORT or http://$SERVER_HOST:$SERVER_WEB_PORT"
