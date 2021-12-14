@@ -118,7 +118,7 @@ done
 printf "source /etc/profile\ncd %s\n" "$HOME" >"/root/.bashrc"
 [[ -f "/root/.bashrc" ]] && source "/root/.bashrc"
 [[ -f "/config/env" ]] && source "/config/env"
-DOMAIN_NAME="${DOMAIN_NAME:-$REPLACE_DOMAIN}"
+DOMAIN_NAME="${DOMAIN_NAME:-local}"
 HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
 {
   echo 'Starting dynamic DNS server...'
