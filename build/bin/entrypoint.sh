@@ -118,8 +118,9 @@ done
 printf "source /etc/profile\ncd %s\n" "$HOME" >"/root/.bashrc"
 [[ -f "/root/.bashrc" ]] && source "/root/.bashrc"
 [[ -f "/config/env" ]] && source "/config/env"
-DOMAIN_NAME="${DOMAIN_NAME:-local}"
+DOMAIN_NAME="${DOMAIN_NAME:-test}"
 HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
+[[ "$DOMAIN_NAME" == "local" ]] && DOMAIN_NAME="test"
 {
   echo 'Starting dynamic DNS server...'
   touch /run/ddns.pid
@@ -193,7 +194,7 @@ if [[ -f "/data/web/index.php" ]]; then
   php_bin="$(command -v php || command -v php8 || false)"
   if [[ -n "$php_bin" ]]; then
     echo "Initializing web on $IP_ADDR" &>>/data/log/entrypoint.log
-    $php_bin -S 127.0.0.1:80 "/data/web/index.php" &>>/data/log/php.log &
+    $php_bin -S 0.0.0.0:80 -t "/data/web" &>>/data/log/php.log &
     sleep .5
   fi
 fi
