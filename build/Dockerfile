@@ -21,7 +21,7 @@ COPY ./bin/entrypoint.sh /usr/bin/entrypoint.sh
 
 VOLUME ["/data", "/config"]
 
-ENV HOSTNAME="ddns"
+ENV HOSTNAME ddns
 
 HEALTHCHECK CMD /usr/bin/entrypoint.sh --health; exit $?
 
