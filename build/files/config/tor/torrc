@@ -13,7 +13,7 @@ ControlPort 9051
 #HashedControlPassword 16:kfhkajdsfhkjadhfiuhfhdjcahsf
 
 ############### dnforwarder
-DNSPort 0.0.0.0:8053
+DNSPort 127.0.0.1:8053
 AutomapHostsOnResolve 1
 AutomapHostsSuffixes .exit,.onion
 

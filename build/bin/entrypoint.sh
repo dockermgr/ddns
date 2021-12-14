@@ -116,7 +116,8 @@ done
 # Additional variables
 [[ -f "/run/ddns.pid" ]] && echo "PID file exists" && exit 1
 printf "source /etc/profile\ncd %s\n" "$HOME" >"/root/.bashrc"
-source "/root/.bashrc"
+[[ -f "/root/.bashrc" ]] && source "/root/.bashrc"
+[[ -f "/config/env" ]] && source "/config/env"
 DOMAIN_NAME="${DOMAIN_NAME:-$REPLACE_DOMAIN}"
 HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
 {
@@ -192,7 +193,7 @@ if [[ -f "/data/web/index.php" ]]; then
   php_bin="$(command -v php || command -v php8 || false)"
   if [[ -n "$php_bin" ]]; then
     echo "Initializing web on $IP_ADDR" &>>/data/log/entrypoint.log
-    $php_bin -S 0.0.0.0:84 "/data/web/index.php" &>>/data/log/php.log &
+    $php_bin -S 127.0.0.1:84 "/data/web/index.php" &>>/data/log/php.log &
     sleep .5
   fi
 fi
@@ -204,6 +205,7 @@ if [[ -f "/config/named.conf" ]]; then
   [[ -d "/config/named" ]] && cp -Rf "/config/named" "/etc/named"
   [[ -f "/config/rndc.key" ]] && cp -Rf "/config/rndc.key" "/etc/rndc.key"
   [[ -f "/config/rndc.conf" ]] && cp -Rf "/config/rndc.conf" "/etc/rndc.conf"
+  chmod -f 777 "/data/log/dns"
   __run_dns &>>/data/log/named.log &
   sleep .5
 fi
