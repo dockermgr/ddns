@@ -14,7 +14,7 @@ LABEL author="CasjaysDev" \
   version="1.0.0" \
   description="dynamic-dns server"
 
-EXPOSE 53 53/udp 67 67/udp 69 69/udp 84 546 546/udp
+EXPOSE 53 53/udp 67 67/udp 69 69/udp 80 546 546/udp
 
 COPY ./files /var/lib/ddns
 COPY ./bin/entrypoint.sh /usr/bin/entrypoint.sh

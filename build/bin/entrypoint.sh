@@ -193,7 +193,7 @@ if [[ -f "/data/web/index.php" ]]; then
   php_bin="$(command -v php || command -v php8 || false)"
   if [[ -n "$php_bin" ]]; then
     echo "Initializing web on $IP_ADDR" &>>/data/log/entrypoint.log
-    $php_bin -S 127.0.0.1:84 "/data/web/index.php" &>>/data/log/php.log &
+    $php_bin -S 127.0.0.1:80 "/data/web/index.php" &>>/data/log/php.log &
     sleep .5
   fi
 fi

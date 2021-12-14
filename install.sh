@@ -71,13 +71,13 @@ NGINX_HTTPS="${NGINX_HTTPS:-443}"
 SERVER_IP="0.0.0.0"
 SERVER_LISTEN="${SERVER_LISTEN:-0.0.0.0}"
 SERVER_HOST="${APPNAME}.$(hostname -d 2>/dev/null | grep '^' || echo local)"
-SERVER_PORT="${SERVER_PORT:-}"
-SERVER_PORT_INT="${SERVER_PORT_INT:-}"
+SERVER_PORT="${SERVER_PORT:-14050}"
+SERVER_PORT_INT="${SERVER_PORT_INT:-80}"
 SERVER_PORT_ADMIN="${SERVER_PORT_ADMIN:-}"
 SERVER_PORT_ADMIN_INT="${SERVER_PORT_ADMIN_INT:-}"
 SERVER_PORT_OTHER="${SERVER_PORT_OTHER:-}"
 SERVER_PORT_OTHER_INT="${SERVER_PORT_OTHER_INT:-}"
-SERVER_WEB_PORT="${SERVER_WEB_PORT:-14080}"
+SERVER_WEB_PORT="${SERVER_WEB_PORT:-SERVER_PORT}"
 SERVER_TIMEZONE="${TZ:-${TIMEZONE:-America/New_York}}"
 SERVER_SSL_CRT="/etc/ssl/CA/CasjaysDev/certs/localhost.crt"
 SERVER_SSL_KEY="/etc/ssl/CA/CasjaysDev/private/localhost.key"
@@ -164,7 +164,7 @@ else
     -p 68:68/udp \
     -p 69:69/udp \
     -p 546:546/udp \
-    -p $SERVER_WEB_PORT:$SERVER_WEB_PORT \
+    -p $SERVER_PORT:$SERVER_PORT_INT \
     "$HUB_URL" &>/dev/null
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
