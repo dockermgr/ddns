@@ -5,9 +5,9 @@ zone "REPLACE_DOMAIN" {
     allow-transfer { trusted; };
 };
 
-zone "0.10.in-addr.arpa" {
+zone "in-addr.arpa" {
     type master;
-    file "reverse/0.10.in-addr.arpa.rev";
+    file "reverse/in-addr.arpa.rev";
     allow-update { trusted; };
     allow-transfer { trusted; };
 

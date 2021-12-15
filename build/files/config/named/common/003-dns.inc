@@ -1,6 +1,6 @@
 ;local dns
-dns        IN    A           10.0.0.2
-dns        IN    AAAA        2001:db8:edfa:1234::2
+dns        IN    A           REPLACE_IPV4_ADDRESS
+dns        IN    AAAA        REPLACE_IPV6_ADDRESS
 
 default._domainkey      IN      TXT     ( "v=DKIM1; k=rsa; "
           "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDWQ16IV4OzWniRotqTNUvuwO5KknZMm5F5cOQl+Ch20Zm5D3RSL27AcjGE8DXIlkADDG3jFoXKOPilmCyf6ikqDX9PwBpeveY6ugaASMl6DHK4PSGZby6EmFuNu59kIpPJXac7Wwvy7Kd5mWVTZBxQt3ersDf8KRzL+Akr0IE7DwIDAQAB" )  ;

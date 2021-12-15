@@ -70,7 +70,7 @@ while :; do
   case $1 in
   --options)
     shift 1
-    [ -n "$1" ] || printf "Current options for ${PROG:-$APPNAME}\n"
+    [ -n "$1" ] || printf 'Current options for %s\n' "${PROG:-$APPNAME}"
     [ -z "$SHORTOPTS" ] || __list_options "Short Options" "-$SHORTOPTS" ',' '-'
     [ -z "$LONGOPTS" ] || __list_options "Long Options" "--$LONGOPTS" ',' '--'
     [ -z "$ARRAY" ] || __list_options "Base Options" "$ARRAY" ',' ''
@@ -113,14 +113,36 @@ while :; do
   esac
 done
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Additional variables
 [[ -f "/run/ddns.pid" ]] && echo "PID file exists" && exit 1
-printf "source /etc/profile\ncd %s\n" "$HOME" >"/root/.bashrc"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Additional variables
+[[ -f "/root/.bashrc" ]] || printf "source /etc/profile\ncd %s\n" "$HOME" >"/root/.bashrc"
 [[ -f "/root/.bashrc" ]] && source "/root/.bashrc"
 [[ -f "/config/env" ]] && source "/config/env"
+DATE="$(date +%Y%m%d)01"
+OLD_DATE="${OLD_DATE:-2018020901}"
+NETDEV="$(ip route 2>/dev/null | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//" | awk '{print $1}')"
+IPV4_ADDR="$(ifconfig $NETDEV 2>/dev/null | grep -E "venet|inet" | grep -v "127.0.0." | grep 'inet' | grep -v inet6 | awk '{print $2}' | sed s/addr://g | head -n1 | grep '^' || echo '')"
+IPV6_ADDR="$(ifconfig "$NETDEV" 2>/dev/null | grep -E "venet|inet" | grep 'inet6' | grep -i global | awk '{print $2}' | head -n1 | grep '^' || echo '')"
+IPV4_ADDR_GATEWAY="$(ip route show default | awk '/default/ {print $3}' | head -n1 | grep '^' || echo '')"
+IPV4_ADDR="${IPV4_ADDR:-10.0.0.2}"
+IPV4_ADDR_SUBNET="${IPV4_ADDR_SUBNET:-10.0.0.0}"
+IPV4_ADDR_START="${IPV4_ADDR_START:-10.0.100.1}"
+IPV4_ADDR_END="${IPV4_ADDR_END:-10.0.100.254}"
+IPV4_ADDR_NETMASK="${IPV4_ADDR_NETMASK:-255.255.0.0}"
+IPV4_ADDR_GATEWAY="${IPV4_ADDR_GATEWAY:-10.0.0.1}"
+IPV6_ADDR="${IP6_ADDR:-2001:0db8:edfa:1234::2}"
+IPV6_ADDR_SUBNET="${IPV6_ADDR_SUBNET:-2001:0db8:edfa:1234::}"
+IPV6_ADDR_START="${IPV6_ADDR_START:-2001:0db8:edfa:1234:5678::1}"
+IPV6_ADDR_END="${IPV6_ADDR_END:-2001:0db8:edfa:1234:5678::ffff}"
+IPV6_ADDR_NETMASK="${IPV6_ADDR_NETMASK:-64}"
+IPV6_ADDR_GATEWAY="${IPV6_ADDR_GATEWAY:-2001:0db8:edfa:1234::1}"
+
 DOMAIN_NAME="${DOMAIN_NAME:-test}"
 HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
 [[ "$DOMAIN_NAME" == "local" ]] && DOMAIN_NAME="test"
+###############################################################################
+[[ -f "/config/env" ]] && source "/config/env"
 {
   echo 'Starting dynamic DNS server...'
   touch /run/ddns.pid
@@ -130,8 +152,6 @@ HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
 [[ -d "/data/log" ]] && rm -Rf /data/log/* || mkdir -p "/data/log"
 [[ -f "/etc/profile" ]] && [[ ! -f "/root/.profile" ]] && cp -Rf "/etc/profile" "/root/.profile"
 
-IP_ADDR="$(ip addr show | grep 'eth' | grep "inet" | awk '{print $2}' | sed 's|/.||g')"
-DATE="$(date +%Y%m%d)01"
 if [[ -f "/config/rndc.key" ]]; then
   RNDC_KEY="$(cat /config/rndc.key | grep secret | awk '{print $2}' | sed 's|;||g;s|"||g')"
 else
@@ -154,9 +174,60 @@ fi
 [[ -f "/config/named.conf" ]] || cp -Rf "/var/lib/ddns/config/named.conf" "/config/named.conf" &>>/data/log/entrypoint.log
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Main application
+find "/config" "/data" -type f -exec sed -i 's|'${OLD_DATE:-2018020901}'|'$DATE'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_DOMAIN|'$DOMAIN_NAME'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_WITH_RNDC_KEY|'$RNDC_KEY'|g' {} \;
-find "/config" "/data" -type f -exec sed -i 's|2018020901|'$DATE'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDRESS|'$IPV4_ADDR'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDR_START|'$IPV4_ADDR_START'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDR_END|'$IPV4_ADDR_END'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_SUBNET|'$REPLACE_IPV4_ADDR_SUBNET'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_NETMASK|'$IPV4_ADDR_NETMASK'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_GATEWAY|'$IPV4_ADDR_GATEWAY'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDRESS|'$IPV6_ADDR'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDR_START|'$IPV6_ADDR_START'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDR_END|'$IPV6_ADDR_END'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_SUBNET|'$REPLACE_IPV6_ADDR_SUBNET'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_NETMASK|'$IPV6_ADDR_NETMASK'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_GATEWAY|'$IPV6_ADDR_GATEWAY'|g' {} \;
+
+if [ ! -f "/confiv/env" ]; then
+  echo "Creating file: /config/env" &>>/data/log/entrypoint.log
+  cat <<EOF >/config/env
+OLD_DATE="${OLD_DATE:-2018020901}"
+NETDEV="$(ip route 2>/dev/null | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//" | awk '{print $1}')"
+IPV4_ADDR="$(ifconfig $NETDEV 2>/dev/null | grep -E "venet|inet" | grep -v "127.0.0." | grep 'inet' | grep -v inet6 | awk '{print $2}' | sed s/addr://g | head -n1 | grep '^' || echo '')"
+IPV6_ADDR="$(ifconfig "$NETDEV" 2>/dev/null | grep -E "venet|inet" | grep 'inet6' | grep -i global | awk '{print $2}' | head -n1 | grep '^' || echo '')"
+IPV4_ADDR="${IPV4_ADDR:-10.0.0.2}"
+IPV4_ADDR_SUBNET="${IPV4_ADDR_SUBNET:-10.0.0.0}"
+IPV4_ADDR_START="${IPV4_ADDR_START:-10.0.100.1}"
+IPV4_ADDR_END="${IPV4_ADDR_END:-10.0.100.254}"
+IPV4_ADDR_NETMASK="${IPV4_ADDR_NETMASK:-255.255.0.0}"
+IPV4_ADDR_GATEWAY="${IPV4_ADDR_GATEWAY:-10.0.0.1}"
+IPV6_ADDR="${IP6_ADDR:-2001:0db8:edfa:1234::2}"
+IPV6_ADDR_SUBNET="${IPV6_ADDR_SUBNET:-2001:0db8:edfa:1234::}"
+IPV6_ADDR_START="${IPV6_ADDR_START:-2001:0db8:edfa:1234:5678::1}"
+IPV6_ADDR_END="${IPV6_ADDR_END:-2001:0db8:edfa:1234:5678::ffff}"
+IPV6_ADDR_NETMASK="${IPV6_ADDR_NETMASK:-64}"
+IPV6_ADDR_GATEWAY="${IPV6_ADDR_GATEWAY:-2001:0db8:edfa:1234::1}"
+
+EOF
+fi
+
+if [[ -n "$IP6_ADDR" ]]; then
+  if [[ -f "/config/dhcp/dhcpd6.conf" ]]; then
+    echo "Initializing dhcpd6" &>>/data/log/entrypoint.log
+    cp -Rf "/config/dhcp/dhcpd6.conf" "/etc/dhcp/dhcpd6.conf"
+    touch /var/lib/dhcp/dhcpd6.leases
+    dhcpd -6 -cf /etc/dhcp/dhcpd6.conf &>>/data/log/dhcpd6.log &
+    sleep .5
+  fi
+  if [[ -f "/config/radvd.conf" ]]; then
+    echo "Initializing radvd" &>>/data/log/entrypoint.log
+    cp -Rf "/config/radvd.conf" "/etc/radvd.conf"
+    radvd -C /etc/radvd.conf &>>/data/log/radvd.log &
+    sleep .5
+  fi
+fi
 
 if [[ -f "/config/dhcp/dhcpd4.conf" ]]; then
   echo "Initializing dhcpd4" &>>/data/log/entrypoint.log
@@ -165,19 +236,7 @@ if [[ -f "/config/dhcp/dhcpd4.conf" ]]; then
   dhcpd -4 -cf /etc/dhcp/dhcpd4.conf &>>/data/log/dhcpd4.log &
   sleep .5
 fi
-if [[ -f "/config/dhcp/dhcpd6.conf" ]]; then
-  echo "Initializing dhcpd6" &>>/data/log/entrypoint.log
-  cp -Rf "/config/dhcp/dhcpd6.conf" "/etc/dhcp/dhcpd6.conf"
-  touch /var/lib/dhcp/dhcpd6.leases
-  dhcpd -6 -cf /etc/dhcp/dhcpd6.conf &>>/data/log/dhcpd6.log &
-  sleep .5
-fi
-if [[ -f "/config/radvd.conf" ]]; then
-  echo "Initializing radvd" &>>/data/log/entrypoint.log
-  cp -Rf "/config/radvd.conf" "/etc/radvd.conf"
-  radvd -C /etc/radvd.conf &>>/data/log/radvd.log &
-  sleep .5
-fi
+
 if [[ -d "/config/tor" ]]; then
   echo "Initializing tor" &>>/data/log/entrypoint.log
   [[ -d "/config/tor" ]] && cp -Rf "/config/tor" "/etc/tor"

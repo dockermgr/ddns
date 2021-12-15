@@ -32,6 +32,11 @@
   <!-- Begin Main Body -->
   <div class="container pt-3">
     <h1>Welcome</h1>
+    Your dynamic dns server has been setup<br />
+    Your config files can be found in the /config directory.<br />
+    Your data files can be found in the /data directory.<br />
+    Your web files can be found in the /data/web directory.<br />
+and your log files can be found in /data/logs<br />
   </div>
 
   <!-- End Main End Body -->

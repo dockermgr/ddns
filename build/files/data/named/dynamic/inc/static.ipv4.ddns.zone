@@ -3,13 +3,13 @@ localhost                   A       127.0.0.1
 gateway                     A       192.168.1.254
 
 access                      A       10.0.0.1
-zerotier                    A       10.0.0.2
+zerotier                    A       REPLACE_IPV4_ADDRESS
 
 ;server                      A       10.0.0.1
-;dc                          A       10.0.0.2
+;dc                          A       REPLACE_IPV4_ADDRESS
 ;exchange                    A       10.0.0.3
 
-sso                         A       10.0.0.250
+sso                         A       REPLACE_IPV4_ADDRESS50
 
 vcenter                     A       10.0.1.1
 vmhost01                    A       10.0.1.11
@@ -110,4 +110,4 @@ monitor                     A       10.0.255.254
 mail                        A       10.0.20.252
 
 smtp-relay                  A       149.28.32.84
-*                           A       10.0.0.2
+*                           A       REPLACE_IPV4_ADDRESS
