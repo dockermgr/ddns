@@ -193,6 +193,7 @@ find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_GATEWAY|'$IPV6_ADDR_
 if [ ! -f "/confiv/env" ]; then
   echo "Creating file: /config/env" &>>/data/log/entrypoint.log
   cat <<EOF >/config/env
+RNDC_KEY="${RNDC_KEY:-}"
 OLD_DATE="${OLD_DATE:-2018020901}"
 NETDEV="$(ip route 2>/dev/null | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//" | awk '{print $1}')"
 IPV4_ADDR="$(ifconfig $NETDEV 2>/dev/null | grep -E "venet|inet" | grep -v "127.0.0." | grep 'inet' | grep -v inet6 | awk '{print $2}' | sed s/addr://g | head -n1 | grep '^' || echo '')"

@@ -1,7 +1,7 @@
 ; static ipv4 reverse mappings
 $ORIGIN .
 $TTL 38400  ; 10 hours 40 minutes
-0.10.in-addr.arpa   IN SOA  dns.REPLACE_DOMAIN. admin.REPLACE_DOMAIN. (
+in-addr.arpa   IN SOA  dns.REPLACE_DOMAIN. admin.REPLACE_DOMAIN. (
            2018013087 ; serial
            10800      ; refresh (3 hours)
            3600       ; retry (1 hour)
@@ -11,6 +11,4 @@ $TTL 38400  ; 10 hours 40 minutes
       NS    dns1.REPLACE_DOMAIN.
       NS    dns2.REPLACE_DOMAIN.
 
-$ORIGIN 0.0.10.in-addr.arpa.
-1     PTR   server.REPLACE_DOMAIN.
-2     PTR   zerotier.REPLACE_DOMAIN.
+$ORIGIN in-addr.arpa.
