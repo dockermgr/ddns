@@ -148,7 +148,7 @@ HOSTNAME="$(hostname -s).${DOMAIN_NAME}"
   touch /run/ddns.pid
   date '+%Y-%m-%d %H:%M'
   echo "Setting hostname to $HOSTNAME"
-} &>>/data/log/entrypoint.log
+} &>/data/log/entrypoint.log
 [[ -d "/data/log" ]] && rm -Rf /data/log/* || mkdir -p "/data/log"
 [[ -f "/etc/profile" ]] && [[ ! -f "/root/.profile" ]] && cp -Rf "/etc/profile" "/root/.profile"
 
@@ -160,6 +160,7 @@ else
   [[ -f "/config/rndc.key" ]] || cp -Rf "/etc/rndc.key" "/config/rndc.key" &>>/data/log/entrypoint.log
   [[ -f "/config/rndc.conf" ]] || { [[ -f "/etc/rndc.conf" ]] && cp -Rf "/etc/rndc.conf" "/config/rndc.conf" &>>/data/log/entrypoint.log; }
 fi
+[[ -d "/run/tor" ]] || mkdir -p "/run/tor" &>>/data/log/entrypoint.log
 [[ -d "/etc/dhcp" ]] || mkdir -p "/etc/dhcp" &>>/data/log/entrypoint.log
 [[ -d "/run/dhcp" ]] || mkdir -p "/run/dhcp" &>>/data/log/entrypoint.log
 [[ -d "/var/tftpboot" ]] && [[ ! -d "/data/tftp" ]] && mv -f "/var/tftpboot" "/data/tftp" &>>/data/log/entrypoint.log
@@ -214,6 +215,20 @@ IPV6_ADDR_GATEWAY="${IPV6_ADDR_GATEWAY:-2001:0db8:edfa:1234::1}"
 EOF
 fi
 
+if [[ -f "/config/named.conf" ]]; then
+  echo "Initializing named" &>>/data/log/entrypoint.log
+  rm -R /data/log/dns/* &>>/data/log/entrypoint.log
+  cp -Rf "/config/named.conf" "/etc/named.conf"
+  [[ -d "/data/log/dns" ]] || mkdir -p "/data/log/dns"
+  [[ -d "/data/named" ]] && cp -Rf "/data/named" "/var/named"
+  [[ -d "/config/named" ]] && cp -Rf "/config/named" "/etc/named"
+  [[ -f "/config/rndc.key" ]] && cp -Rf "/config/rndc.key" "/etc/rndc.key"
+  [[ -f "/config/rndc.conf" ]] && cp -Rf "/config/rndc.conf" "/etc/rndc.conf"
+  chmod -f 777 "/data/log/dns"
+  __run_dns &>>/data/log/named.log &
+  sleep .5
+fi
+
 if [[ -n "$IP6_ADDR" ]]; then
   if [[ -f "/config/dhcp/dhcpd6.conf" ]]; then
     echo "Initializing dhcpd6" &>>/data/log/entrypoint.log
@@ -242,13 +257,14 @@ if [[ -d "/config/tor" ]]; then
   echo "Initializing tor" &>>/data/log/entrypoint.log
   [[ -d "/config/tor" ]] && cp -Rf "/config/tor" "/etc/tor"
   chown -Rf root:root "/var/lib/tor"
+  chmod 700 "/run/tor"
   tor -f "/etc/tor/torrc" &>>/data/log/tor.log &
 fi
 if [[ -d "/data/tftp" ]]; then
   echo "Initializing tftp" &>>/data/log/entrypoint.log
   rm -Rf "/var/tftpboot"
   ln -sf "/data/tftp" "/var/tftpboot"
-  in.tftpd -L /var/tftpboot &>/data/log/tftpd.log &
+  in.tftpd -vv -L /var/tftpboot &>/data/log/tftpd.log &
 fi
 if [[ -f "/data/web/index.php" ]]; then
   php_bin="$(command -v php || command -v php8 || false)"
@@ -257,18 +273,6 @@ if [[ -f "/data/web/index.php" ]]; then
     $php_bin -S 0.0.0.0:80 -t "/data/web" &>>/data/log/php.log &
     sleep .5
   fi
-fi
-if [[ -f "/config/named.conf" ]]; then
-  echo "Initializing named" &>>/data/log/entrypoint.log
-  cp -Rf "/config/named.conf" "/etc/named.conf"
-  [[ -d "/data/log/dns" ]] || mkdir -p "/data/log/dns"
-  [[ -d "/data/named" ]] && cp -Rf "/data/named" "/var/named"
-  [[ -d "/config/named" ]] && cp -Rf "/config/named" "/etc/named"
-  [[ -f "/config/rndc.key" ]] && cp -Rf "/config/rndc.key" "/etc/rndc.key"
-  [[ -f "/config/rndc.conf" ]] && cp -Rf "/config/rndc.conf" "/etc/rndc.conf"
-  chmod -f 777 "/data/log/dns"
-  __run_dns &>>/data/log/named.log &
-  sleep .5
 fi
 sleep 5
 date +'%Y-%m-%d %H:%M' >/data/log/entrypoint.log

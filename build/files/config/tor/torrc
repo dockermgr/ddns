@@ -1,27 +1,26 @@
+## https://github.com/torproject/tor/blob/main/src/config/torrc.sample.in
 ############### Configuration file for a typical Tor user
-#ControlSocket /run/tor/control
-#ControlSocketsGroupWritable 1
-#CookieAuthentication 1
-#CookieAuthFile /run/tor/control.authcookie
-#CookieAuthFileGroupReadable 1
-SOCKSPort 9050 # Default: Bind to localhost:9050 for local connections.
-#Log notice file /var/log/tor/notices.log
-#Log debug file /var/log/tor/debug.log
+ControlSocket /run/tor/control
+ControlSocketsGroupWritable 1
+CookieAuthentication 1
+CookieAuthFile /run/tor/control.authcookie
+CookieAuthFileGroupReadable 1
+SOCKSPort 9050
+SOCKSPolicy accept *
 RunAsDaemon 0
 DataDirectory /var/lib/tor
 ControlPort 9051
+Log notice stderr
 #HashedControlPassword 16:kfhkajdsfhkjadhfiuhfhdjcahsf
 
-############### dnforwarder
-DNSPort 127.0.0.1:8053
+############### dnsforwarder
+DNSPort 8053
 AutomapHostsOnResolve 1
 AutomapHostsSuffixes .exit,.onion
 
 ############### This section is just for location-hidden services ###
-#HiddenServiceDir /var/lib/tor/hidden_service/default
+#HiddenServiceDir /data/tor/hidden/default
 #HiddenServicePort 22 127.0.0.2:22
-#HiddenServicePort 25 127.0.0.2:25
-#HiddenServicePort 80 127.0.0.2:8082
 
 ################ This section is just for relays #####################
 #ORPort 9001
