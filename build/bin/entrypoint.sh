@@ -180,13 +180,13 @@ find "/config" "/data" -type f -exec sed -i 's|REPLACE_WITH_RNDC_KEY|'$RNDC_KEY'
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDRESS|'$IPV4_ADDR'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDR_START|'$IPV4_ADDR_START'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_ADDR_END|'$IPV4_ADDR_END'|g' {} \;
-find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_SUBNET|'$REPLACE_IPV4_ADDR_SUBNET'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_SUBNET|'$IPV4_ADDR_SUBNET'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_NETMASK|'$IPV4_ADDR_NETMASK'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV4_GATEWAY|'$IPV4_ADDR_GATEWAY'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDRESS|'$IPV6_ADDR'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDR_START|'$IPV6_ADDR_START'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_ADDR_END|'$IPV6_ADDR_END'|g' {} \;
-find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_SUBNET|'$REPLACE_IPV6_ADDR_SUBNET'|g' {} \;
+find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_SUBNET|'$IPV6_ADDR_SUBNET'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_NETMASK|'$IPV6_ADDR_NETMASK'|g' {} \;
 find "/config" "/data" -type f -exec sed -i 's|REPLACE_IPV6_GATEWAY|'$IPV6_ADDR_GATEWAY'|g' {} \;
 

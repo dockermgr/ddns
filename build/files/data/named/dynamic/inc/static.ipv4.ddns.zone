@@ -2,6 +2,4 @@
 localhost                   A       127.0.0.1
 gateway                     A       192.168.1.254
 
-zerotier                    A       REPLACE_IPV4_ADDRESS
-sso                         A       REPLACE_IPV4_ADDRESS50
 *                           A       REPLACE_IPV4_ADDRESS
