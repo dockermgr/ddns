@@ -1,7 +1,0 @@
-; cname mappings
-smtp                        CNAME   mail
-pop3                        CNAME   mail
-imap                        CNAME   mail
-
-@                           MX 1    mail
-*                           MX 1    mail

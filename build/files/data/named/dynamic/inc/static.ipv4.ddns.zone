@@ -1,5 +1,0 @@
-; static ipv4 mappings
-localhost                   A       127.0.0.1
-gateway                     A       192.168.1.254
-
-*                           A       REPLACE_IPV4_ADDRESS
